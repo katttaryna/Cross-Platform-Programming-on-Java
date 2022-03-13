@@ -24,4 +24,12 @@ public class Property {
     public void setPerimeter(double perimeter) {
         this.perimeter = perimeter;
     }
+    @Override
+    public boolean equals(Object obj) {
+        Property test = (Property) obj;
+        if (square == test.square && perimeter == test.perimeter) {
+            return true;
+        }
+        else return false;
+    }
 }
