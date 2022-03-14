@@ -2,8 +2,8 @@ package com.example.lab1.controller;
 
 import com.example.lab1.exception.Exception;
 import com.example.lab1.exception.InternalException;
-//import com.example.lab1.response.Response;
 import com.example.lab1.entities.Property;
+import com.example.lab1.figures.Figures;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,23 +14,28 @@ public class FiguresController {
     public Property getSquarePerimeter(@RequestParam(value = "length", defaultValue = "0") String length,
                                 @RequestParam(value = "height", defaultValue = "0") String height)
     {
-        double ln , hg;
-        if (length.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+") &&
-                height.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")) {
-            ln = Double.parseDouble(length);
-            hg = Double.parseDouble(height);
-            if (ln < 0 || hg < 0) {
-                throw new Exception("Wrong value...");
+        Figures figures = new Figures();
+        if(length.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")){
+            figures.setLength(Double.parseDouble(length));
+            if(figures.getLength() < 0){
+                throw new Exception("The length value is less than 0...");
             }
         }
         else
-            throw new Exception("Wrong value...");
-        if(ln == 2)
-            throw new InternalException("Failed...");
+            throw new Exception("The length value is not a number...");
 
-    double square = ln * hg;
-    double perimeter = hg + hg + ln + ln;
+        if(height.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")){
+            figures.setHeight(Double.parseDouble(height));
+            if(figures.getHeight() < 0){
+                throw new Exception("The height value is less than 0...");
+            }
+        }
+        else
+            throw new Exception("The height value is not a number...");
 
-    return new Property(square, perimeter);
+        if(figures.getLength() == 2)
+            throw new InternalException("Error 500 is called...");
+
+        return new Property(figures.calculationSquare(), figures.calculationPerimeter());
     }
 }
