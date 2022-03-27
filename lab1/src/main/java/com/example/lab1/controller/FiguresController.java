@@ -1,6 +1,11 @@
 package com.example.lab1.controller;
 
 import com.example.lab1.exception.Exception;
+import com.example.lab1.calculation.Param;
+import com.example.lab1.calculation.Solution;
+import com.example.lab1.cache.Cache;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import com.example.lab1.exception.InternalException;
 import com.example.lab1.entities.Property;
 import com.example.lab1.figures.Figures;
@@ -15,6 +20,7 @@ public class FiguresController {
                                 @RequestParam(value = "height", defaultValue = "0") String height)
     {
         Figures figures = new Figures();
+
         if(length.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")){
             figures.setLength(Double.parseDouble(length));
             if(figures.getLength() < 0){
@@ -36,6 +42,14 @@ public class FiguresController {
         if(figures.getLength() == 2)
             throw new InternalException("Error 500 is called...");
 
-        return new Property(figures.calculationSquare(), figures.calculationPerimeter());
+        var solution = new Solution(new Param(figures.getHeight(), figures.getLength()));
+        solution.calculateRoot();
+
+       return new Property(solution.getRoot());
+
+    }
+    @GetMapping("/cache")
+    public ResponseEntity<String> printCache() {
+        return new ResponseEntity<>(Cache.getStaticStringCache(), HttpStatus.OK);
     }
 }

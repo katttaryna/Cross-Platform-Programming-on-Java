@@ -37,4 +37,5 @@ public class Figures {
     public double calculationPerimeter(){
         return this.height+this.length+this.height+this.length;
     }
+
 }

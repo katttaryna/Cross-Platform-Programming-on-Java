@@ -8,6 +8,10 @@ public class Property {
         this.square = square;
         this.perimeter = perimeter;
     }
+    public Property(Property a) {
+        this.square = a.square;
+        this.perimeter = a.perimeter;
+    }
 
     public double getSquare() {
         return square;
