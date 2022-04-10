@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FiguresController {
+    private Counter counter = new Counter();
     @GetMapping("/figure")
     public Property getSquarePerimeter(@RequestParam(value = "length", defaultValue = "0") String length,
                                 @RequestParam(value = "height", defaultValue = "0") String height)
     {
+        counter.increment();
         Figures figures = new Figures();
 
         if(length.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")){
