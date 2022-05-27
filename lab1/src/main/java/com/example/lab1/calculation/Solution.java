@@ -8,11 +8,14 @@ import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.OptionalDouble;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 public class Solution {
 
     private final Cache cache;
 
-    private final Param parameters;
+    private Param parameters;
 
     private Property root;
 
@@ -22,6 +25,17 @@ public class Solution {
         context.close();
 
         this.parameters = params;
+    }
+
+    public Solution() {
+        var context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        cache = context.getBean("cache", Cache.class);
+        context.close();
+        parameters = null;
+    }
+
+    public void setParameters(Param params){
+        this.parameters=params;
     }
 
     public void calculateRoot() {
@@ -41,13 +55,20 @@ public class Solution {
 
         cache.add(parameters, root);
     }
+    public OptionalDouble averageOfPositive(String[] arr){
+        IntStream stream = Stream.of(arr).mapToInt(Integer::parseInt);
+        return stream.filter(x->x>0).average();
+    }
 
     public Property getRoot() {
+
         return root;
     }
 
     public void setRoot(@Nullable Property root) {
         this.root = root;
     }
+
+
 
 }
