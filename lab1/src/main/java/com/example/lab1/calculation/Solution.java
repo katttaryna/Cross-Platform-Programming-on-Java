@@ -38,22 +38,24 @@ public class Solution {
         this.parameters=params;
     }
 
-    public void calculateRoot() {
+    public int calculateRoot()
+    {
 
         var temp = cache.find(parameters);
         if (temp != null) {
             ProgramLogger.log(Level.WARN, "Value found in cache!");
             setRoot(temp);
 
-            return;
+            return 0;
         }
-
+        Double temp1;
        temp = new Property(parameters.getSecondValue()* parameters.getFirstValue(),
                 parameters.getSecondValue()+ parameters.getFirstValue()+parameters.getSecondValue()+ parameters.getFirstValue());
-
+        temp1 = parameters.getSecondValue()+ parameters.getFirstValue()+parameters.getSecondValue()+ parameters.getFirstValue();
         setRoot(temp);
-
+        int value = temp1.intValue();
         cache.add(parameters, root);
+        return value;
     }
     public OptionalDouble averageOfPositive(String[] arr){
         IntStream stream = Stream.of(arr).mapToInt(Integer::parseInt);

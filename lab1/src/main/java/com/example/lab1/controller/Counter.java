@@ -16,6 +16,11 @@ public class Counter {
 
     @GetMapping("/counter")
     synchronized public String showCalls() {
+
         return "Number of calls : "+counter;
+    }
+
+    synchronized public int retInt() {
+        return 0;
     }
 }
