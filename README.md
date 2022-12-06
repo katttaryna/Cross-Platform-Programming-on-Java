@@ -1,5 +1,5 @@
-                                                   EN: Introduction to Cross-Platform Programming on Java
-                                                   RU: Лабораторные работы по языку Java 
+                                    EN: Introduction to Cross-Platform Programming on Java
+                                    RU: Лабораторные работы по языку Java 
                                                 
 1. Intro 
 
